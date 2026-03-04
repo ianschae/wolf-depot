@@ -6,8 +6,8 @@ import { fileURLToPath } from 'url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
-// GitHub Pages serves at lowercase URL: username.github.io/wolf-depot/
-const base = process.env.VITE_BASE_PATH ?? (process.env.NODE_ENV === 'production' ? '/wolf-depot/' : '/')
+// Relative base so assets load on GitHub Pages from any repo path/casing
+const base = process.env.NODE_ENV === 'production' ? './' : '/'
 
 export default defineConfig({
   plugins: [
