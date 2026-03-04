@@ -30,7 +30,10 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run build
+        run: |
+          # GitHub Pages URL is lowercase
+          export VITE_BASE_PATH="/$(echo '${{ github.event.repository.name }}' | tr '[:upper:]' '[:lower:]')/"
+          npm run build
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
