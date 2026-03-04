@@ -6,151 +6,95 @@ export default function Cart() {
 
   if (items.length === 0) {
     return (
-      <div style={{ maxWidth: 500, margin: '0 auto', padding: '3rem 1.5rem', textAlign: 'center' }}>
-        <p style={{ fontSize: '1.25rem', marginBottom: '1rem' }}>Your cart is empty.</p>
-        <Link
-          to="/products"
-          style={{
-            display: 'inline-block',
-            padding: '0.6rem 1.25rem',
-            background: 'var(--wolf-orange)',
-            color: 'white',
-            borderRadius: 'var(--radius)',
-            fontWeight: 600,
-            textDecoration: 'none',
-          }}
-        >
-          Shop products
-        </Link>
+      <div className="main-content">
+        <div className="container">
+          <div className="empty-cart">
+            <p>Your cart is empty.</p>
+            <Link to="/products" className="btn-primary">Shop Products</Link>
+          </div>
+        </div>
       </div>
     )
   }
 
   return (
-    <div style={{ maxWidth: 800, margin: '0 auto', padding: '0 1.5rem' }}>
-      <h1 style={{ fontSize: '1.75rem', marginBottom: '1.5rem' }}>Shopping cart</h1>
+    <div className="main-content">
+      <div className="container">
+        <nav className="breadcrumb">
+          <Link to="/">Home</Link>
+          <span>/</span>
+          <span>Cart</span>
+        </nav>
 
-      <div
-        style={{
-          background: 'var(--wolf-white)',
-          borderRadius: 'var(--radius-lg)',
-          boxShadow: 'var(--shadow-lg)',
-          overflow: 'hidden',
-        }}
-      >
-        <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+        <h1 className="section-title" style={{ marginBottom: 24 }}>Shopping Cart</h1>
+
+        <div className="cart-table-wrap">
           {items.map((item) => (
-            <li
-              key={item.id}
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'auto 1fr auto auto auto',
-                gap: '1rem',
-                alignItems: 'center',
-                padding: '1rem 1.25rem',
-                borderBottom: '1px solid var(--wolf-gray-100)',
-              }}
-            >
-              <span style={{ fontSize: '2rem' }} aria-hidden>{item.image}</span>
-              <div>
-                <Link to={`/product/${item.id}`} style={{ fontWeight: 600, color: 'inherit', textDecoration: 'none' }}>
-                  {item.name}
-                </Link>
-                <p style={{ margin: '0.25rem 0 0', fontSize: '0.9rem', color: 'var(--wolf-orange)', fontWeight: 600 }}>
-                  ${item.price.toFixed(2)} each
-                </p>
+            <div key={item.id} className="cart-row">
+              <div className="cart-item-image" aria-hidden>
+                {item.image}
               </div>
-              <label style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+              <div className="cart-item-name">
+                <Link to={`/product/${item.id}`}>{item.name}</Link>
+                <p className="cart-item-price">${item.price.toFixed(2)} each</p>
+              </div>
+              <div className="cart-item-qty">
                 <input
                   type="number"
                   min={1}
                   value={item.qty}
-                  onChange={(e) => setQty(item.id, Number(e.target.value) || 1)}
+                  onChange={(e) => setQty(item.id, Math.max(1, Number(e.target.value) || 1))}
                   style={{
-                    width: 52,
-                    padding: '0.35rem',
-                    border: '1px solid var(--wolf-gray-400)',
-                    borderRadius: 'var(--radius)',
+                    width: 56,
+                    padding: '6px 10px',
+                    border: '1px solid var(--border)',
+                    borderRadius: 4,
+                    fontSize: 14,
                   }}
                 />
-              </label>
-              <span style={{ fontWeight: 700, minWidth: 70, textAlign: 'right' }}>
+              </div>
+              <div className="cart-item-total" style={{ fontWeight: 700, fontSize: 16 }}>
                 ${(item.price * item.qty).toFixed(2)}
-              </span>
-              <button
-                type="button"
-                onClick={() => removeFromCart(item.id)}
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  color: 'var(--wolf-gray-700)',
-                  padding: '0.25rem',
-                  fontSize: '0.9rem',
-                  textDecoration: 'underline',
-                }}
-              >
-                Remove
-              </button>
-            </li>
+              </div>
+              <div className="cart-item-remove">
+                <button
+                  type="button"
+                  onClick={() => removeFromCart(item.id)}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: 'var(--gray-500)',
+                    fontSize: 13,
+                    textDecoration: 'underline',
+                    padding: 4,
+                  }}
+                >
+                  Remove
+                </button>
+              </div>
+            </div>
           ))}
-        </ul>
-
-        <div
-          style={{
-            padding: '1.25rem 1.5rem',
-            background: 'var(--wolf-gray-100)',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            gap: '1rem',
-          }}
-        >
-          <div>
-            <strong style={{ fontSize: '1.1rem' }}>Subtotal ({totalItems} items):</strong>
-            <span style={{ marginLeft: '0.5rem', fontSize: '1.25rem', color: 'var(--wolf-orange)' }}>
-              ${subtotal.toFixed(2)}
-            </span>
+          <div className="cart-total-row">
+            <span className="cart-total-label">Subtotal ({totalItems} items)</span>
+            <span className="cart-total-value">${subtotal.toFixed(2)}</span>
           </div>
-          <div style={{ display: 'flex', gap: '0.75rem' }}>
-            <button
-              type="button"
-              onClick={clearCart}
-              style={{
-                padding: '0.5rem 1rem',
-                background: 'transparent',
-                border: '1px solid var(--wolf-gray-700)',
-                borderRadius: 'var(--radius)',
-                fontWeight: 600,
-                color: 'var(--wolf-gray-700)',
-              }}
-            >
-              Clear cart
-            </button>
-            <button
-              type="button"
-              style={{
-                padding: '0.6rem 1.25rem',
-                background: 'var(--wolf-orange)',
-                color: 'white',
-                border: 'none',
-                borderRadius: 'var(--radius)',
-                fontWeight: 600,
-              }}
-            >
-              Checkout (demo)
-            </button>
+          <div className="cart-total-row" style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 16 }}>
+            <Link to="/products" style={{ color: 'var(--gray-700)' }}>← Continue shopping</Link>
+            <div className="cart-actions">
+              <button type="button" className="btn-secondary" onClick={clearCart}>
+                Clear cart
+              </button>
+              <button type="button" className="btn-primary" style={{ padding: '12px 28px' }}>
+                Checkout
+              </button>
+            </div>
           </div>
         </div>
+
+        <p style={{ fontSize: 13, color: 'var(--gray-500)', marginTop: 16 }}>
+          This is a demo store. Checkout does not process real payments.
+        </p>
       </div>
-
-      <p style={{ marginTop: '1rem', fontSize: '0.9rem', color: 'var(--wolf-gray-700)' }}>
-        This is a demo store. Checkout does not process real payments.
-      </p>
-
-      <Link to="/products" style={{ display: 'inline-block', marginTop: '0.5rem', fontWeight: 600 }}>
-        ← Continue shopping
-      </Link>
     </div>
   )
 }

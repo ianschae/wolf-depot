@@ -14,9 +14,11 @@ export default function ProductDetail() {
 
   if (!product) {
     return (
-      <div style={{ maxWidth: 600, margin: '0 auto', padding: '2rem 1.5rem', textAlign: 'center' }}>
-        <p>Product not found.</p>
-        <Link to="/products">Back to products</Link>
+      <div className="main-content">
+        <div className="container" style={{ textAlign: 'center', padding: '48px 24px' }}>
+          <p style={{ fontSize: 18, marginBottom: 16 }}>Product not found.</p>
+          <Link to="/products" className="btn-primary">Back to products</Link>
+        </div>
       </div>
     )
   }
@@ -24,93 +26,66 @@ export default function ProductDetail() {
   const handleAdd = () => {
     addToCart(product, qty)
     setAdded(true)
-    setTimeout(() => setAdded(false), 2000)
+    setTimeout(() => setAdded(false), 2500)
   }
 
   return (
-    <div style={{ maxWidth: 800, margin: '0 auto', padding: '0 1.5rem' }}>
-      <div style={{ marginBottom: '1rem' }}>
-        <Link to="/" style={{ color: 'var(--wolf-gray-700)', fontSize: '0.9rem' }}>← Home</Link>
-        <span style={{ margin: '0 0.5rem', color: 'var(--wolf-gray-400)' }}>/</span>
-        <Link to="/products" style={{ color: 'var(--wolf-gray-700)', fontSize: '0.9rem' }}>Products</Link>
-        {category && (
-          <>
-            <span style={{ margin: '0 0.5rem', color: 'var(--wolf-gray-400)' }}>/</span>
-            <Link to={`/products/category/${category.slug}`} style={{ color: 'var(--wolf-gray-700)', fontSize: '0.9rem' }}>
-              {category.name}
-            </Link>
-          </>
-        )}
-      </div>
-
-      <div
-        style={{
-          background: 'var(--wolf-white)',
-          borderRadius: 'var(--radius-lg)',
-          padding: '2rem',
-          boxShadow: 'var(--shadow-lg)',
-          display: 'grid',
-          gap: '2rem',
-          gridTemplateColumns: '1fr 1fr',
-        }}
-      >
-        <div style={{ textAlign: 'center', fontSize: '5rem' }} aria-hidden>
-          {product.image}
-        </div>
-        <div>
-          <h1 style={{ margin: '0 0 0.5rem', fontSize: '1.5rem' }}>{product.name}</h1>
-          <p style={{ margin: '0 0 1rem', fontSize: '1.5rem', fontWeight: 700, color: 'var(--wolf-orange)' }}>
-            ${product.price.toFixed(2)}
-          </p>
-          <p style={{ margin: '0 0 1.5rem', color: 'var(--wolf-gray-700)', lineHeight: 1.6 }}>
-            {product.description}
-          </p>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-            <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <span style={{ fontWeight: 600 }}>Qty:</span>
-              <input
-                type="number"
-                min={1}
-                value={qty}
-                onChange={(e) => setQty(Number(e.target.value) || 1)}
-                style={{
-                  width: 64,
-                  padding: '0.4rem',
-                  border: '1px solid var(--wolf-gray-400)',
-                  borderRadius: 'var(--radius)',
-                  fontSize: '1rem',
-                }}
-              />
-            </label>
-            <button
-              type="button"
-              onClick={handleAdd}
-              style={{
-                padding: '0.6rem 1.25rem',
-                background: added ? 'var(--wolf-gray-700)' : 'var(--wolf-orange)',
-                color: 'white',
-                border: 'none',
-                borderRadius: 'var(--radius)',
-                fontWeight: 600,
-                fontSize: '1rem',
-              }}
-            >
-              {added ? 'Added to cart!' : 'Add to cart'}
-            </button>
-          </div>
-          {added && (
-            <Link
-              to="/cart"
-              style={{
-                display: 'inline-block',
-                marginTop: '0.75rem',
-                fontWeight: 600,
-                fontSize: '0.95rem',
-              }}
-            >
-              View cart →
-            </Link>
+    <div className="main-content">
+      <div className="container">
+        <nav className="breadcrumb">
+          <Link to="/">Home</Link>
+          <span>/</span>
+          <Link to="/products">Products</Link>
+          {category && (
+            <>
+              <span>/</span>
+              <Link to={`/products/category/${category.slug}`}>{category.name}</Link>
+            </>
           )}
+          <span>/</span>
+          <span>{product.name}</span>
+        </nav>
+
+        <div className="pdp-layout">
+          <div className="pdp-image" aria-hidden>
+            {product.image}
+          </div>
+          <div>
+            <h1 className="pdp-title">{product.name}</h1>
+            <p className="pdp-price">${product.price.toFixed(2)}</p>
+            <p className="pdp-desc">{product.description}</p>
+            <div className="pdp-actions">
+              <label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span style={{ fontWeight: 600 }}>Qty</span>
+                <input
+                  type="number"
+                  min={1}
+                  value={qty}
+                  onChange={(e) => setQty(Math.max(1, Number(e.target.value) || 1))}
+                />
+              </label>
+              <button
+                type="button"
+                className="btn-primary"
+                onClick={handleAdd}
+                style={{
+                  padding: '12px 24px',
+                  fontSize: 16,
+                  background: added ? 'var(--success)' : undefined,
+                }}
+              >
+                {added ? 'Added to Cart' : 'Add to Cart'}
+              </button>
+            </div>
+            {added && (
+              <Link to="/cart" style={{ display: 'inline-block', marginTop: 16, fontWeight: 600 }}>
+                View cart →
+              </Link>
+            )}
+            <p style={{ marginTop: 24, fontSize: 13, color: 'var(--gray-500)' }}>
+              Free delivery on orders over $45. Pick up in store available.
+            </p>
+          </div>
         </div>
       </div>
     </div>
