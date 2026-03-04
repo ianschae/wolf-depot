@@ -1,0 +1,54 @@
+:root {
+  --wolf-orange: #e87722;
+  --wolf-orange-dark: #c96318;
+  --wolf-yellow: #ffb81c;
+  --wolf-black: #1a1a1a;
+  --wolf-gray-900: #2d2d2d;
+  --wolf-gray-700: #4a4a4a;
+  --wolf-gray-400: #9ca3af;
+  --wolf-gray-100: #f3f4f6;
+  --wolf-white: #ffffff;
+  --shadow: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-lg: 0 4px 12px rgba(0,0,0,0.1);
+  --radius: 8px;
+  --radius-lg: 12px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+  background: var(--wolf-gray-100);
+  color: var(--wolf-black);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+a {
+  color: var(--wolf-orange);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
