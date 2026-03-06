@@ -84,9 +84,9 @@ export default function Cart() {
               <button type="button" className="btn-secondary" onClick={clearCart}>
                 Clear cart
               </button>
-              <button type="button" className="btn-primary" style={{ padding: '12px 28px' }}>
+              <Link to="/checkout" className="btn-primary" style={{ padding: '12px 28px' }}>
                 Checkout
-              </button>
+              </Link>
             </div>
           </div>
         </div>
