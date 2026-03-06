@@ -1,7 +1,8 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 
 export default function Cart() {
+  const navigate = useNavigate()
   const { items, totalItems, subtotal, removeFromCart, setQty, clearCart } = useCart()
 
   if (items.length === 0) {
@@ -84,9 +85,14 @@ export default function Cart() {
               <button type="button" className="btn-secondary" onClick={clearCart}>
                 Clear cart
               </button>
-              <Link to="/checkout" className="btn-primary" style={{ padding: '12px 28px' }}>
+              <button
+                type="button"
+                className="btn-primary"
+                style={{ padding: '12px 28px' }}
+                onClick={() => navigate('/checkout')}
+              >
                 Checkout
-              </Link>
+              </button>
             </div>
           </div>
         </div>
