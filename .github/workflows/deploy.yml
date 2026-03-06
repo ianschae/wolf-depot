@@ -67,6 +67,8 @@ jobs:
       - name: Notify QA Wolf of deployment
         id: notify
         uses: qawolf/notify-qawolf-on-deploy-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           qawolf-api-key: ${{ secrets.QAWOLF_API_KEY }}
           deployment-url: ${{ needs.deploy.outputs.page_url }}
@@ -75,3 +77,12 @@ jobs:
       - name: Log QA Wolf run ID
         if: success()
         run: echo "QA Wolf run ID: ${{ steps.notify.outputs.run-id }}"
+
+      - name: Validate QA Wolf run ID
+        if: success()
+        run: |
+          if [ -z "${{ steps.notify.outputs.run-id }}" ]; then
+            echo "QA Wolf notification succeeded but no run-id was returned."
+            echo "Check that a QA Wolf deployment trigger exists and matches branch/deployment-type."
+            exit 1
+          fi
