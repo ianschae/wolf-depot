@@ -10,7 +10,7 @@ export default function Home() {
       <div className="container">
         <section className="hero">
           <h1>Wolf Depot</h1>
-          <p>Tools, Lumber &amp; Hardware — Everything you need for your next project.</p>
+          <p>Tools, Lumber &amp; Hardware — Everything you need for your next project, now with a new mock checkout flow.</p>
           <Link to="/products" className="btn">Shop All Products</Link>
         </section>
 
