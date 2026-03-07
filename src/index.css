@@ -44,31 +44,6 @@ body {
   flex-direction: column;
 }
 
-/* Navigation loading bar */
-.nav-loading {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  z-index: 9999;
-  overflow: hidden;
-  background: var(--gray-100);
-}
-
-.nav-loading-bar {
-  height: 100%;
-  width: 30%;
-  background: var(--hd-orange);
-  animation: nav-loading 0.8s ease-in-out infinite;
-}
-
-@keyframes nav-loading {
-  0% { transform: translateX(-100%); }
-  50% { transform: translateX(230%); }
-  100% { transform: translateX(-100%); }
-}
-
 a {
   color: var(--hd-orange);
   text-decoration: none;
