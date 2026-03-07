@@ -10,16 +10,16 @@ import Checkout from './pages/Checkout'
 export default function App() {
   return (
     <CartProvider>
-      <Layout>
-        <Routes>
+      <Routes>
+        <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/category/:categorySlug" element={<Products />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
-        </Routes>
-      </Layout>
+        </Route>
+      </Routes>
     </CartProvider>
   )
 }
