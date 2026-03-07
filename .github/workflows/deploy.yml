@@ -76,12 +76,12 @@ jobs:
 
       - name: Log QA Wolf run ID
         if: success()
-        run: echo "QA Wolf run ID: ${{ steps.notify.outputs.run-id }}"
+        run: echo "QA Wolf run ID: ${{ steps.notify.outputs['run-id'] }}"
 
       - name: Validate QA Wolf run ID
         if: success()
         run: |
-          if [ -z "${{ steps.notify.outputs.run-id }}" ]; then
+          if [ -z "${{ steps.notify.outputs['run-id'] }}" ]; then
             echo "QA Wolf notification succeeded but no run-id was returned."
             echo "Check that a QA Wolf deployment trigger exists and matches branch/deployment-type."
             exit 1
