@@ -120,11 +120,11 @@ export default function Checkout() {
 
   if (items.length === 0 && !placed) {
     return (
-      <div className="main-content">
+      <div className="main-content" data-testid="page-checkout">
         <div className="container">
-          <div className="empty-cart">
+          <div className="empty-cart" data-testid="checkout-empty">
             <p>Your cart is empty.</p>
-            <Link to="/products" className="btn-primary">Shop Products</Link>
+            <Link to="/products" className="btn-primary" data-testid="checkout-empty-shop">Shop Products</Link>
           </div>
         </div>
       </div>
@@ -133,20 +133,16 @@ export default function Checkout() {
 
   if (placed) {
     return (
-      <div className="main-content">
+      <div className="main-content" data-testid="page-checkout-success">
         <div className="container">
-          <div className="checkout-success">
+          <div className="checkout-success" data-testid="checkout-success">
             <div className="checkout-success-icon">✓</div>
-            <h1 className="section-title" style={{ color: 'var(--success)', marginBottom: 8 }}>
-              Order confirmed
-            </h1>
-            <p style={{ fontSize: 18, marginBottom: 8 }}>
-              Order number: <strong>{orderNumber}</strong>
-            </p>
+            <h1 className="section-title" style={{ color: 'var(--success)', marginBottom: 8 }} data-testid="checkout-success-title">Order confirmed</h1>
+            <p style={{ fontSize: 18, marginBottom: 8 }} data-testid="checkout-order-number">Order number: <strong>{orderNumber}</strong></p>
             <p style={{ color: 'var(--gray-700)', marginBottom: 32 }}>
               A confirmation email has been sent to {shipping.email}. This is a demo — no charge was made.
             </p>
-            <Link to="/products" className="btn-primary">Continue shopping</Link>
+            <Link to="/products" className="btn-primary" data-testid="checkout-success-continue">Continue shopping</Link>
           </div>
         </div>
       </div>
@@ -154,25 +150,25 @@ export default function Checkout() {
   }
 
   return (
-    <div className="main-content">
+    <div className="main-content" data-testid="page-checkout">
       <div className="container">
-        <nav className="breadcrumb">
-          <Link to="/">Home</Link>
+        <nav className="breadcrumb" data-testid="breadcrumb">
+          <Link to="/" data-testid="breadcrumb-home">Home</Link>
           <span>/</span>
-          <Link to="/cart">Cart</Link>
+          <Link to="/cart" data-testid="breadcrumb-cart">Cart</Link>
           <span>/</span>
           <span>Checkout</span>
         </nav>
 
-        <div className="checkout-header">
-          <h1 className="section-title" style={{ marginBottom: 0 }}>Checkout</h1>
+        <div className="checkout-header" data-testid="checkout-header">
+          <h1 className="section-title" style={{ marginBottom: 0 }} data-testid="checkout-title">Checkout</h1>
           <div className="checkout-secure">
             <span className="checkout-lock" aria-hidden>🔒</span>
             Secure checkout
           </div>
         </div>
 
-        <div className="checkout-steps">
+        <div className="checkout-steps" data-testid="checkout-steps">
           {STEPS.map((label, i) => (
             <div
               key={label}
@@ -185,30 +181,30 @@ export default function Checkout() {
           ))}
         </div>
 
-        <form onSubmit={step === 3 ? handlePlaceOrder : (e) => { e.preventDefault(); handleNext(); }} className="checkout-form">
+        <form onSubmit={step === 3 ? handlePlaceOrder : (e) => { e.preventDefault(); handleNext(); }} className="checkout-form" data-testid="checkout-form">
           <div className="checkout-main">
             {step === 1 && (
-              <section className="checkout-section">
+              <section className="checkout-section" data-testid="checkout-step-shipping">
                 <h2>Shipping address</h2>
                 <div className="form-grid">
                   <label className="form-field form-field-full">
                     <span>Email</span>
-                    <input type="email" name="email" value={shipping.email} onChange={updateShipping} placeholder="you@example.com" />
+                    <input type="email" name="email" value={shipping.email} onChange={updateShipping} placeholder="you@example.com" data-testid="checkout-email" />
                     {errors.email && <span className="form-error">{errors.email}</span>}
                   </label>
                   <label className="form-field">
                     <span>First name</span>
-                    <input type="text" name="firstName" value={shipping.firstName} onChange={updateShipping} />
+                    <input type="text" name="firstName" value={shipping.firstName} onChange={updateShipping} data-testid="checkout-first-name" />
                     {errors.firstName && <span className="form-error">{errors.firstName}</span>}
                   </label>
                   <label className="form-field">
                     <span>Last name</span>
-                    <input type="text" name="lastName" value={shipping.lastName} onChange={updateShipping} />
+                    <input type="text" name="lastName" value={shipping.lastName} onChange={updateShipping} data-testid="checkout-last-name" />
                     {errors.lastName && <span className="form-error">{errors.lastName}</span>}
                   </label>
                   <label className="form-field form-field-full">
                     <span>Address</span>
-                    <input type="text" name="address1" value={shipping.address1} onChange={updateShipping} placeholder="Street address" />
+                    <input type="text" name="address1" value={shipping.address1} onChange={updateShipping} placeholder="Street address" data-testid="checkout-address1" />
                     {errors.address1 && <span className="form-error">{errors.address1}</span>}
                   </label>
                   <label className="form-field form-field-full">
@@ -217,17 +213,17 @@ export default function Checkout() {
                   </label>
                   <label className="form-field">
                     <span>City</span>
-                    <input type="text" name="city" value={shipping.city} onChange={updateShipping} />
+                    <input type="text" name="city" value={shipping.city} onChange={updateShipping} data-testid="checkout-city" />
                     {errors.city && <span className="form-error">{errors.city}</span>}
                   </label>
                   <label className="form-field">
                     <span>State</span>
-                    <input type="text" name="state" value={shipping.state} onChange={updateShipping} placeholder="e.g. CA" />
+                    <input type="text" name="state" value={shipping.state} onChange={updateShipping} placeholder="e.g. CA" data-testid="checkout-state" />
                     {errors.state && <span className="form-error">{errors.state}</span>}
                   </label>
                   <label className="form-field">
                     <span>ZIP code</span>
-                    <input type="text" name="zip" value={shipping.zip} onChange={updateShipping} />
+                    <input type="text" name="zip" value={shipping.zip} onChange={updateShipping} data-testid="checkout-zip" />
                     {errors.zip && <span className="form-error">{errors.zip}</span>}
                   </label>
                   <label className="form-field form-field-full">
@@ -239,7 +235,7 @@ export default function Checkout() {
             )}
 
             {step === 2 && (
-              <section className="checkout-section">
+              <section className="checkout-section" data-testid="checkout-step-payment">
                 <h2>Payment</h2>
                 <p className="checkout-demo-note">Demo only — no real payment. Use any test values.</p>
                 <div className="card-logos" aria-hidden>
@@ -366,7 +362,7 @@ export default function Checkout() {
           </div>
 
           <aside className="checkout-sidebar">
-            <div className="order-summary">
+            <div className="order-summary" data-testid="checkout-order-summary">
               <h2>Order summary</h2>
               <ul className="order-summary-list">
                 {items.map((item) => (
@@ -387,20 +383,20 @@ export default function Checkout() {
               )}
 
               {step < 3 ? (
-                <button type="submit" className="btn-primary btn-block">
+                <button type="submit" className="btn-primary btn-block" data-testid="checkout-continue">
                   Continue to {step === 1 ? 'payment' : 'review'}
                 </button>
               ) : (
-                <button type="submit" className="btn-primary btn-block">
+                <button type="submit" className="btn-primary btn-block" data-testid="checkout-place-order">
                   Place order
                 </button>
               )}
               {step > 1 && (
-                <button type="button" className="btn-secondary btn-block" onClick={() => setStep(step - 1)}>
+                <button type="button" className="btn-secondary btn-block" onClick={() => setStep(step - 1)} data-testid="checkout-back">
                   Back
                 </button>
               )}
-              <Link to="/cart" className="checkout-back-link">← Back to cart</Link>
+              <Link to="/cart" className="checkout-back-link" data-testid="checkout-back-to-cart">← Back to cart</Link>
             </div>
           </aside>
         </form>

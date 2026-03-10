@@ -14,10 +14,10 @@ export default function ProductDetail() {
 
   if (!product) {
     return (
-      <div className="main-content">
-        <div className="container" style={{ textAlign: 'center', padding: '48px 24px' }}>
+      <div className="main-content" data-testid="page-product-detail">
+        <div className="container" style={{ textAlign: 'center', padding: '48px 24px' }} data-testid="product-not-found">
           <p style={{ fontSize: 18, marginBottom: 16 }}>Product not found.</p>
-          <Link to="/products" className="btn-primary">Back to products</Link>
+          <Link to="/products" className="btn-primary" data-testid="link-back-to-products">Back to products</Link>
         </div>
       </div>
     )
@@ -30,31 +30,31 @@ export default function ProductDetail() {
   }
 
   return (
-    <div className="main-content">
+    <div className="main-content" data-testid="page-product-detail">
       <div className="container">
-        <nav className="breadcrumb">
-          <Link to="/">Home</Link>
+        <nav className="breadcrumb" data-testid="breadcrumb">
+          <Link to="/" data-testid="breadcrumb-home">Home</Link>
           <span>/</span>
-          <Link to="/products">Products</Link>
+          <Link to="/products" data-testid="breadcrumb-products">Products</Link>
           {category && (
             <>
               <span>/</span>
-              <Link to={`/products/category/${category.slug}`}>{category.name}</Link>
+              <Link to={`/products/category/${category.slug}`} data-testid="breadcrumb-category">{category.name}</Link>
             </>
           )}
           <span>/</span>
           <span>{product.name}</span>
         </nav>
 
-        <div className="pdp-layout">
-          <div className="pdp-image" aria-hidden>
+        <div className="pdp-layout" data-testid={`pdp-${product.id}`}>
+          <div className="pdp-image" aria-hidden data-testid="pdp-image">
             {product.image}
           </div>
           <div>
-            <h1 className="pdp-title">{product.name}</h1>
-            <p className="pdp-price">${product.price.toFixed(2)}</p>
-            <p className="pdp-desc">{product.description}</p>
-            <div className="pdp-actions">
+            <h1 className="pdp-title" data-testid="pdp-title">{product.name}</h1>
+            <p className="pdp-price" data-testid="pdp-price">${product.price.toFixed(2)}</p>
+            <p className="pdp-desc" data-testid="pdp-description">{product.description}</p>
+            <div className="pdp-actions" data-testid="pdp-actions">
               <label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <span style={{ fontWeight: 600 }}>Qty</span>
                 <input
@@ -62,12 +62,14 @@ export default function ProductDetail() {
                   min={1}
                   value={qty}
                   onChange={(e) => setQty(Math.max(1, Number(e.target.value) || 1))}
+                  data-testid="pdp-quantity"
                 />
               </label>
               <button
                 type="button"
                 className="btn-primary"
                 onClick={handleAdd}
+                data-testid="pdp-add-to-cart"
                 style={{
                   padding: '12px 24px',
                   fontSize: 16,
@@ -78,7 +80,7 @@ export default function ProductDetail() {
               </button>
             </div>
             {added && (
-              <Link to="/cart" style={{ display: 'inline-block', marginTop: 16, fontWeight: 600 }}>
+              <Link to="/cart" style={{ display: 'inline-block', marginTop: 16, fontWeight: 600 }} data-testid="pdp-view-cart">
                 View cart →
               </Link>
             )}

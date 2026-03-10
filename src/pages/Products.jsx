@@ -15,14 +15,14 @@ export default function Products() {
   }
 
   return (
-    <div className="main-content">
+    <div className="main-content" data-testid="page-products">
       <div className="container">
-        <nav className="breadcrumb">
-          <Link to="/">Home</Link>
+        <nav className="breadcrumb" data-testid="breadcrumb">
+          <Link to="/" data-testid="breadcrumb-home">Home</Link>
           <span>/</span>
           {category ? (
             <>
-              <Link to="/products">Products</Link>
+              <Link to="/products" data-testid="breadcrumb-products">Products</Link>
               <span>/</span>
               <span>{category.name}</span>
             </>
@@ -31,18 +31,19 @@ export default function Products() {
           )}
         </nav>
 
-        <h1 className="section-title" style={{ marginBottom: 24 }}>
+        <h1 className="section-title" style={{ marginBottom: 24 }} data-testid="page-title">
           {category ? category.name : q ? `Results for "${q}"` : 'All Products'}
         </h1>
 
         {!category && (
-          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 24 }}>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 24 }} data-testid="category-filters">
             {categories.map((c) => (
               <Link
                 key={c.id}
                 to={`/products/category/${c.slug}`}
                 className="btn-secondary"
                 style={{ padding: '8px 14px', fontSize: 13 }}
+                data-testid={`category-filter-${c.slug}`}
               >
                 {c.name}
               </Link>
@@ -51,9 +52,9 @@ export default function Products() {
         )}
 
         {filtered.length === 0 ? (
-          <p style={{ color: 'var(--gray-500)', fontSize: 16 }}>No products found.</p>
+          <p style={{ color: 'var(--gray-500)', fontSize: 16 }} data-testid="products-empty">No products found.</p>
         ) : (
-          <div className="product-grid">
+          <div className="product-grid" data-testid="product-grid">
             {filtered.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
