@@ -67,13 +67,20 @@ img {
 
 /* Under construction banner */
 .under-construction-banner {
-  background: var(--hd-yellow);
-  color: var(--black);
+  background: repeating-linear-gradient(
+    45deg,
+    var(--hd-yellow),
+    var(--hd-yellow) 12px,
+    #000 12px,
+    #000 24px
+  );
+  color: #000;
   text-align: center;
-  padding: 8px 16px;
+  padding: 10px 16px;
   font-size: 14px;
-  font-weight: 600;
-  border-bottom: 2px solid var(--hd-orange-dark);
+  font-weight: 700;
+  text-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
+  letter-spacing: 0.02em;
 }
 
 /* Top bar (store finder, weekly ad, account, cart) */
