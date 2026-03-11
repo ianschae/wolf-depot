@@ -4,3 +4,6 @@ dist
 *.log
 .env
 .env.local
+server/wolf-depot.db
+server/wolf-depot.db-wal
+server/wolf-depot.db-shm

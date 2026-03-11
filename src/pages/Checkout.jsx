@@ -1,6 +1,10 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
+import { postOrder } from '../api.js'
+import { addOrder } from '../data/orders'
+
+const ORDER_EMAIL_KEY = 'wolf-depot-order-email'
 
 const STEPS = ['Shipping', 'Payment', 'Review']
 
@@ -112,8 +116,21 @@ export default function Checkout() {
     setStep((s) => Math.min(3, s + 1))
   }
 
-  const handlePlaceOrder = (e) => {
+  const handlePlaceOrder = async (e) => {
     e.preventDefault()
+    const orderPayload = { orderNumber, email: shipping.email, items: [...items], total }
+    try {
+      await postOrder(orderPayload)
+      try { localStorage.setItem(ORDER_EMAIL_KEY, shipping.email) } catch (_) {}
+    } catch {
+      addOrder({
+        orderNumber,
+        date: new Date().toISOString(),
+        items: [...items],
+        email: shipping.email,
+        total,
+      })
+    }
     clearCart()
     setPlaced(true)
   }

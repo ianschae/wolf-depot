@@ -1,0 +1,14 @@
+{
+  "name": "wolf-depot-api",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "seed": "node -e \"import('./db.js').then(m => m.seed())\""
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.6.0",
+    "cors": "^2.8.5",
+    "express": "^4.21.0"
+  }
+}

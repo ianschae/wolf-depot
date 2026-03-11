@@ -1,15 +1,16 @@
 import { useParams, Link } from 'react-router-dom'
-import { products, categories } from '../data/products'
+import { useData } from '../context/DataContext'
 import { useCart } from '../context/CartContext'
 import { useState } from 'react'
 
 export default function ProductDetail() {
   const { id } = useParams()
+  const { getProduct, categories } = useData()
   const { addToCart } = useCart()
   const [qty, setQty] = useState(1)
   const [added, setAdded] = useState(false)
 
-  const product = products.find((p) => p.id === id)
+  const product = getProduct(id)
   const category = product ? categories.find((c) => c.id === product.category) : null
 
   if (!product) {

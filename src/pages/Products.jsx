@@ -1,8 +1,9 @@
 import { useParams, useSearchParams, Link } from 'react-router-dom'
-import { categories, products } from '../data/products'
+import { useData } from '../context/DataContext'
 import ProductCard from '../components/ProductCard'
 
 export default function Products() {
+  const { categories, products } = useData()
   const { categorySlug } = useParams()
   const [searchParams] = useSearchParams()
   const q = searchParams.get('q')?.toLowerCase().trim() || ''

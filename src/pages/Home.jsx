@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom'
-import { categories, products } from '../data/products'
+import { useData } from '../context/DataContext'
 import ProductCard from '../components/ProductCard'
 
 export default function Home() {
+  const { categories, products } = useData()
   const featured = products.slice(0, 8)
 
   return (

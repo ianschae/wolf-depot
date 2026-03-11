@@ -1,0 +1,25 @@
+export const categories = [
+  { id: 'tools', name: 'Power Tools', slug: 'tools' },
+  { id: 'lumber', name: 'Lumber & Building Materials', slug: 'lumber' },
+  { id: 'hardware', name: 'Hardware', slug: 'hardware' },
+  { id: 'paint', name: 'Paint & Supplies', slug: 'paint' },
+  { id: 'outdoor', name: 'Outdoor & Garden', slug: 'outdoor' },
+]
+
+export const products = [
+  { id: '1', name: 'Cordless Drill Driver 20V', price: 129.99, category: 'tools', image: '🔧', description: '20V MAX cordless drill/driver with 2-speed transmission and LED worklight. Includes 2 Ah battery and charger.' },
+  { id: '2', name: 'Circular Saw 7-1/4"', price: 159.00, category: 'tools', image: '🪚', description: '15-Amp 7-1/4 in. circular saw with magnesium shoe and dust blower. Left-blade design for better visibility.' },
+  { id: '3', name: 'Impact Driver Kit', price: 199.00, category: 'tools', image: '⚙️', description: '18V compact impact driver with 3-mode drive control. Kit includes 2 batteries and soft case.' },
+  { id: '4', name: '2x4 Stud - 8 ft', price: 6.47, category: 'lumber', image: '🪵', description: 'Spruce-Pine-Fir stud, 2 in. x 4 in. x 8 ft. Grade stamped, kiln dried. Ideal for framing.' },
+  { id: '5', name: 'Plywood 4x8 - 1/2"', price: 42.97, category: 'lumber', image: '📐', description: 'Sandeply hardwood plywood panel, 1/2 in. x 4 ft x 8 ft. Sanded both sides, project-grade.' },
+  { id: '6', name: 'Deck Board 5/4x6 - 8 ft', price: 12.98, category: 'lumber', image: '🪵', description: 'Pressure-treated 5/4 in. x 6 in. x 8 ft deck board. Ground contact rated.' },
+  { id: '7', name: 'Assorted Screws 1 lb', price: 8.97, category: 'hardware', image: '🔩', description: '1 lb assorted wood screws, Phillips drive. Multiple sizes for general use.' },
+  { id: '8', name: 'Heavy-Duty Shelf Bracket', price: 14.99, category: 'hardware', image: '📎', description: 'Pair of 12 in. heavy-duty L brackets. Supports up to 100 lbs per pair.' },
+  { id: '9', name: 'Door Hinge 3-1/2"', price: 4.97, category: 'hardware', image: '🚪', description: '3-1/2 in. x 3-1/2 in. ball bearing hinge. Prime steel, zinc plated. Sold in pairs.' },
+  { id: '10', name: 'Interior Paint 1 Gallon', price: 34.98, category: 'paint', image: '🪣', description: 'One-coat interior paint + primer, flat finish. Covers 350-400 sq ft per gallon.' },
+  { id: '11', name: 'Paint Roller Kit', price: 18.97, category: 'paint', image: '🖌️', description: '9 in. roller frame, 2 covers, tray and liner. Perfect for walls and ceilings.' },
+  { id: '12', name: 'Brush Set 4-Piece', price: 24.99, category: 'paint', image: '🖌️', description: 'Synthetic bristle brush set: 1 in., 2 in., 2-1/2 in., 3 in. For latex and oil paints.' },
+  { id: '13', name: 'Gas Lawn Mower 21"', price: 349.00, category: 'outdoor', image: '🌿', description: '21 in. 140 cc gas push mower. 3-in-1 mulch, bag, side discharge. 2 gal fuel tank.' },
+  { id: '14', name: 'Garden Hose 50 ft', price: 29.97, category: 'outdoor', image: '💧', description: '50 ft x 5/8 in. kink-free garden hose. Flexible in all weather. Brass fittings.' },
+  { id: '15', name: 'Potting Soil 1 cu ft', price: 6.97, category: 'outdoor', image: '🪴', description: 'All-purpose potting mix, 1 cu ft. Enriched with fertilizer. For containers and raised beds.' },
+]

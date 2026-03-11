@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import { CartProvider } from './context/CartContext'
+import { DataProvider } from './context/DataContext'
 import Layout from './components/Layout'
 import Home from './pages/Home'
 import Products from './pages/Products'
@@ -18,6 +19,7 @@ import WeeklyAd from './pages/WeeklyAd'
 export default function App() {
   return (
     <CartProvider>
+      <DataProvider>
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -36,6 +38,7 @@ export default function App() {
           <Route path="/weekly-ad" element={<WeeklyAd />} />
         </Routes>
       </Layout>
+      </DataProvider>
     </CartProvider>
   )
 }

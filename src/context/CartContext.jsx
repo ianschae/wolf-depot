@@ -1,6 +1,18 @@
-import React, { createContext, useContext, useReducer } from 'react'
+import React, { createContext, useContext, useReducer, useEffect } from 'react'
 
+const CART_KEY = 'wolf-depot-cart'
 const CartContext = createContext(null)
+
+function loadCart() {
+  try {
+    const raw = localStorage.getItem(CART_KEY)
+    if (!raw) return []
+    const parsed = JSON.parse(raw)
+    return Array.isArray(parsed) ? parsed : []
+  } catch {
+    return []
+  }
+}
 
 function cartReducer(state, action) {
   switch (action.type) {
@@ -28,7 +40,11 @@ function cartReducer(state, action) {
 }
 
 export function CartProvider({ children }) {
-  const [items, dispatch] = useReducer(cartReducer, [])
+  const [items, dispatch] = useReducer(cartReducer, [], loadCart)
+
+  useEffect(() => {
+    localStorage.setItem(CART_KEY, JSON.stringify(items))
+  }, [items])
 
   const addToCart = (product, qty = 1) => {
     dispatch({ type: 'ADD', payload: { ...product, qty } })
