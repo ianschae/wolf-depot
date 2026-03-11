@@ -8,37 +8,37 @@ export default function Footer() {
           <div className="footer-col" data-testid="footer-customer-service">
             <h4>Customer Service</h4>
             <ul>
-              <li><Link to="/" data-testid="footer-link-help">Help & Contact</Link></li>
-              <li><Link to="/" data-testid="footer-link-order-status">Order Status</Link></li>
-              <li><Link to="/" data-testid="footer-link-returns">Returns & Exchanges</Link></li>
-              <li><Link to="/" data-testid="footer-link-shipping">Shipping & Delivery</Link></li>
+              <li><Link to="/help" data-testid="footer-link-help">Help & Contact</Link></li>
+              <li><Link to="/orders" data-testid="footer-link-order-status">Order Status</Link></li>
+              <li><Link to="/help" data-testid="footer-link-returns">Returns & Exchanges</Link></li>
+              <li><Link to="/help" data-testid="footer-link-shipping">Shipping & Delivery</Link></li>
             </ul>
           </div>
           <div className="footer-col" data-testid="footer-store-info">
             <h4>Store Information</h4>
             <ul>
-              <li><Link to="/" data-testid="footer-link-store-finder">Store Finder</Link></li>
-              <li><Link to="/" data-testid="footer-link-weekly-ad">Weekly Ad</Link></li>
-              <li><Link to="/" data-testid="footer-link-pro-center">Pro Center</Link></li>
-              <li><Link to="/" data-testid="footer-link-gift-cards">Gift Cards</Link></li>
+              <li><Link to="/stores" data-testid="footer-link-store-finder">Store Finder</Link></li>
+              <li><Link to="/weekly-ad" data-testid="footer-link-weekly-ad">Weekly Ad</Link></li>
+              <li><Link to="/pro-center" data-testid="footer-link-pro-center">Pro Center</Link></li>
+              <li><Link to="/gift-cards" data-testid="footer-link-gift-cards">Gift Cards</Link></li>
             </ul>
           </div>
           <div className="footer-col" data-testid="footer-about">
             <h4>About Wolf Depot</h4>
             <ul>
-              <li><Link to="/" data-testid="footer-link-about">About Us</Link></li>
-              <li><Link to="/" data-testid="footer-link-careers">Careers</Link></li>
-              <li><Link to="/" data-testid="footer-link-responsibility">Corporate Responsibility</Link></li>
-              <li><Link to="/" data-testid="footer-link-press">Press Room</Link></li>
+              <li><Link to="/about" data-testid="footer-link-about">About Us</Link></li>
+              <li><Link to="/about" data-testid="footer-link-careers">Careers</Link></li>
+              <li><Link to="/about" data-testid="footer-link-responsibility">Corporate Responsibility</Link></li>
+              <li><Link to="/about" data-testid="footer-link-press">Press Room</Link></li>
             </ul>
           </div>
           <div className="footer-col" data-testid="footer-account">
             <h4>Account</h4>
             <ul>
-              <li><Link to="/" data-testid="footer-link-sign-in">Sign In</Link></li>
-              <li><Link to="/" data-testid="footer-link-order-history">Order History</Link></li>
-              <li><Link to="/" data-testid="footer-link-saved-items">Saved Items</Link></li>
-              <li><Link to="/" data-testid="footer-link-credit">Credit Services</Link></li>
+              <li><Link to="/account" data-testid="footer-link-sign-in">Sign In</Link></li>
+              <li><Link to="/account" data-testid="footer-link-order-history">Order History</Link></li>
+              <li><Link to="/account" data-testid="footer-link-saved-items">Saved Items</Link></li>
+              <li><Link to="/account" data-testid="footer-link-credit">Credit Services</Link></li>
             </ul>
           </div>
         </div>

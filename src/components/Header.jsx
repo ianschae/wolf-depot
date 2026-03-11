@@ -21,10 +21,10 @@ export default function Header() {
     <>
       <div className="top-bar" data-testid="top-bar">
         <div className="top-bar-inner">
-          <Link to="/" data-testid="link-store-finder">Store Finder</Link>
-          <Link to="/products" data-testid="link-weekly-ad">Weekly Ad</Link>
-          <Link to="/products" data-testid="link-track-order">Track Order</Link>
-          <Link to="/" data-testid="link-help">Help</Link>
+          <Link to="/stores" data-testid="link-store-finder">Store Finder</Link>
+          <Link to="/weekly-ad" data-testid="link-weekly-ad">Weekly Ad</Link>
+          <Link to="/orders" data-testid="link-track-order">Track Order</Link>
+          <Link to="/help" data-testid="link-help">Help</Link>
           <Link to="/cart" className="header-cart" data-testid="link-cart-top" style={{ marginLeft: 'auto', border: 'none', padding: '10px 12px', background: 'transparent', color: 'white' }}>
             Cart {totalItems > 0 && <span className="cart-count" data-testid="cart-count">{totalItems}</span>}
           </Link>
