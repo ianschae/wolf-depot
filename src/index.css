@@ -68,7 +68,7 @@ img {
 /* Under construction banner */
 .under-construction-banner-wrap {
   position: fixed;
-  top: 0;
+  bottom: 0;
   right: 0;
   z-index: 1001;
   width: 180px;
@@ -79,7 +79,7 @@ img {
 
 .under-construction-banner {
   position: absolute;
-  top: 42px;
+  bottom: 42px;
   right: -62px;
   width: 240px;
   background: repeating-linear-gradient(
@@ -95,8 +95,8 @@ img {
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.02em;
-  transform: rotate(45deg);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transform: rotate(-45deg);
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Top bar (store finder, weekly ad, account, cart) */
