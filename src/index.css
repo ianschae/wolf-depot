@@ -228,6 +228,7 @@ img {
   font-size: 14px;
   display: flex;
   align-items: center;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .nav-link:hover {
