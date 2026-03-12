@@ -73,6 +73,51 @@ jobs:
       - name: Wait for deployment to be ready
         run: sleep 45
 
+  # Resolve Vercel PR preview URL so QA Wolf tests the actual PR build. Requires repo secret: VERCEL_TOKEN (from vercel.com/account/tokens).
+  get-vercel-preview-url:
+    if: github.event_name == 'pull_request'
+    needs: wait-for-deployment
+    runs-on: ubuntu-latest
+    outputs:
+      deployment-url: ${{ steps.get-url.outputs.deployment-url }}
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      BRANCH: ${{ github.head_ref }}
+      REPO_NAME: ${{ github.event.repository.name }}
+    steps:
+      - name: Get Vercel PR preview URL
+        id: get-url
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "VERCEL_TOKEN not set, skipping"
+            echo "deployment-url=https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          # Project slug: repo name lowercased, spaces to hyphens
+          SLUG=$(echo "$REPO_NAME" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
+          # Get project id (try slug as project name)
+          PROJECT_JSON=$(curl -s -H "Authorization: Bearer $VERCEL_TOKEN" "https://api.vercel.com/v9/projects/${SLUG}" || true)
+          PROJECT_ID=$(echo "$PROJECT_JSON" | jq -r '.id // empty')
+          if [ -z "$PROJECT_ID" ]; then
+            echo "Could not find Vercel project, using fallback URL"
+            echo "deployment-url=https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          # List deployments for this branch, get latest ready one
+          DEPLOYS=$(curl -s -H "Authorization: Bearer $VERCEL_TOKEN" "https://api.vercel.com/v6/deployments?projectId=${PROJECT_ID}&target=preview&limit=5")
+          URL=$(echo "$DEPLOYS" | jq -r --arg branch "$BRANCH" '[.deployments[] | select(.meta.githubCommitRef == $branch or .meta.gitSource.ref == $branch) | select(.state == "READY")] | first | .url // empty')
+          if [ -z "$URL" ]; then
+            URL=$(echo "$DEPLOYS" | jq -r --arg branch "$BRANCH" '[.deployments[] | select(.meta.githubCommitRef == $branch or .meta.gitSource.ref == $branch)] | first | .url // empty')
+          fi
+          if [ -n "$URL" ]; then
+            [[ "$URL" != http* ]] && URL="https://${URL}"
+            echo "deployment-url=${URL}" >> $GITHUB_OUTPUT
+            echo "Using Vercel preview: ${URL}"
+          else
+            echo "No Vercel preview found for branch $BRANCH, using fallback"
+            echo "deployment-url=https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/" >> $GITHUB_OUTPUT
+          fi
+
   notify-main:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: deploy
@@ -90,16 +135,17 @@ jobs:
 
   notify-pr:
     if: github.event_name == 'pull_request'
-    needs: [build, wait-for-deployment]
+    needs: [build, get-vercel-preview-url]
     name: Notify QA Wolf (PR)
     runs-on: ubuntu-latest
     steps:
       - name: Notify QA Wolf of deployment
         uses: qawolf/notify-qawolf-on-deploy-action@v1
+        continue-on-error: true  # don't fail PR when trigger doesn't match (e.g. no active tests)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           qawolf-api-key: ${{ secrets.QAWOLF_API_KEY }}
-          deployment-url: ${{ needs.build.outputs.deployment-url }}
+          deployment-url: ${{ needs.get-vercel-preview-url.outputs.deployment-url }}
           deployment-type: "Pull Request"
           pull-request-number: ${{ github.event.pull_request.number }}
