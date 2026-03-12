@@ -494,6 +494,7 @@ img {
 
 .breadcrumb a {
   color: var(--gray-700);
+  transition: color 0.2s ease;
 }
 
 .breadcrumb span {
