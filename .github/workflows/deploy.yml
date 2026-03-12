@@ -1,8 +1,9 @@
-name: Deploy to GitHub Pages
+name: Deploy and Notify QA Wolf
 
 on:
   push:
     branches: [main]
+  pull_request:
 
 permissions:
   contents: read
@@ -16,6 +17,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      deployment-url: ${{ steps.set-url.outputs.deployment-url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -32,15 +35,24 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Set deployment URL (PR)
+        id: set-url
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "deployment-url=https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/" >> $GITHUB_OUTPUT
+
       - name: Setup Pages
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: actions/configure-pages@v4
 
       - name: Upload artifact
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
 
   deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -53,10 +65,57 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-  notify-qa-wolf:
-    name: Notify QA Wolf
+  wait-for-deployment:
+    if: github.event_name == 'pull_request'
+    needs: build
     runs-on: ubuntu-latest
+    steps:
+      - name: Wait for deployment to be ready
+        run: sleep 45
+
+  get-vercel-preview-url:
+    if: github.event_name == 'pull_request'
+    needs: wait-for-deployment
+    runs-on: ubuntu-latest
+    outputs:
+      deployment-url: ${{ steps.get-url.outputs.deployment-url }}
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      BRANCH: ${{ github.head_ref }}
+      REPO_NAME: ${{ github.event.repository.name }}
+    steps:
+      - name: Get Vercel PR preview URL
+        id: get-url
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "VERCEL_TOKEN not set, skipping"
+            echo "deployment-url=https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          SLUG=$(echo "$REPO_NAME" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
+          PROJECT_JSON=$(curl -s -H "Authorization: Bearer $VERCEL_TOKEN" "https://api.vercel.com/v9/projects/${SLUG}" || true)
+          PROJECT_ID=$(echo "$PROJECT_JSON" | jq -r '.id // empty')
+          if [ -z "$PROJECT_ID" ]; then
+            echo "deployment-url=https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          DEPLOYS=$(curl -s -H "Authorization: Bearer $VERCEL_TOKEN" "https://api.vercel.com/v6/deployments?projectId=${PROJECT_ID}&target=preview&limit=5")
+          URL=$(echo "$DEPLOYS" | jq -r --arg branch "$BRANCH" '[.deployments[] | select(.meta.githubCommitRef == $branch or .meta.gitSource.ref == $branch) | select(.state == "READY")] | first | .url // empty')
+          if [ -z "$URL" ]; then
+            URL=$(echo "$DEPLOYS" | jq -r --arg branch "$BRANCH" '[.deployments[] | select(.meta.githubCommitRef == $branch or .meta.gitSource.ref == $branch)] | first | .url // empty')
+          fi
+          if [ -n "$URL" ]; then
+            [[ "$URL" != http* ]] && URL="https://${URL}"
+            echo "deployment-url=${URL}" >> $GITHUB_OUTPUT
+          else
+            echo "deployment-url=https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/" >> $GITHUB_OUTPUT
+          fi
+
+  notify-main:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: deploy
+    name: Notify QA Wolf (main)
+    runs-on: ubuntu-latest
     steps:
       - name: Notify QA Wolf of deployment
         uses: qawolf/notify-qawolf-on-deploy-action@v1
@@ -66,3 +125,19 @@ jobs:
           qawolf-api-key: ${{ secrets.QAWOLF_API_KEY }}
           deployment-url: ${{ needs.deploy.outputs.page_url }}
           deployment-type: develop
+
+  notify:
+    if: github.event_name == 'pull_request'
+    needs: [build, get-vercel-preview-url]
+    name: Notify QA Wolf
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify QA Wolf of deployment
+        uses: qawolf/notify-qawolf-on-deploy-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          qawolf-api-key: ${{ secrets.QAWOLF_API_KEY }}
+          deployment-url: ${{ needs.get-vercel-preview-url.outputs.deployment-url }}
+          deployment-type: "Pull Request"
+          pull-request-number: ${{ github.event.pull_request.number }}
