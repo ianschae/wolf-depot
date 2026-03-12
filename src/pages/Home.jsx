@@ -11,7 +11,7 @@ export default function Home() {
       <div className="container">
         <section className="hero" data-testid="hero">
           <h1 data-testid="hero-title">Wolf Depot</h1>
-          <p data-testid="hero-tagline">Tools, Lumber &amp; Hardware — Everything you need for your next project.</p>
+          <p data-testid="hero-tagline">Tools, Lumber &amp; Hardware — Everything you need for your next project. Free delivery on orders over $45.</p>
           <Link to="/products" className="btn" data-testid="hero-shop-all">Shop All Products</Link>
         </section>
 
