@@ -141,7 +141,6 @@ jobs:
     steps:
       - name: Notify QA Wolf of deployment
         uses: qawolf/notify-qawolf-on-deploy-action@v1
-        continue-on-error: true  # don't fail PR when trigger doesn't match (e.g. no active tests)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
