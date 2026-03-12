@@ -52,3 +52,4 @@ jobs:
           qawolf-api-key: ${{ secrets.QAWOLF_API_KEY }}
           deployment-url: ${{ needs.deploy-environment.outputs.deployment-url }}
           deployment-type: PR
+          pull-request-number: ${{ github.event.pull_request.number }}
