@@ -292,7 +292,7 @@ img {
   background: linear-gradient(135deg, var(--hd-orange) 0%, var(--hd-orange-dark) 100%);
   color: var(--white);
   border-radius: 8px;
-  padding: 48px 40px;
+  padding: 52px 40px;
   margin-bottom: 32px;
   text-align: center;
 }
