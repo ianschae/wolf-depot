@@ -340,7 +340,7 @@ img {
 .dept-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
+  gap: 20px;
   margin-bottom: 32px;
 }
 
