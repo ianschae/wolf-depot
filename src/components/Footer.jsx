@@ -44,7 +44,7 @@ export default function Footer() {
         </div>
         <div className="footer-bottom" data-testid="footer-bottom">
           <Link to="/" className="footer-logo" data-testid="footer-logo">Wolf Depot</Link>
-          <p style={{ margin: '8px 0 0' }}>© {new Date().getFullYear()} Wolf Depot. Tools, Lumber &amp; Hardware — Demo store. No real transactions.</p>
+          <p style={{ margin: '8px 0 0' }}>© {new Date().getFullYear()} Wolf Depot. Tools, Lumber &amp; Hardware — Demo store. No real transactions. Free delivery on orders $45+.</p>
         </div>
       </div>
     </footer>

@@ -22,4 +22,5 @@ export const products = [
   { id: '13', name: 'Gas Lawn Mower 21"', price: 349.00, category: 'outdoor', image: '🌿', description: '21 in. 140 cc gas push mower. 3-in-1 mulch, bag, side discharge. 2 gal fuel tank.' },
   { id: '14', name: 'Garden Hose 50 ft', price: 29.97, category: 'outdoor', image: '💧', description: '50 ft x 5/8 in. kink-free garden hose. Flexible in all weather. Brass fittings.' },
   { id: '15', name: 'Potting Soil 1 cu ft', price: 6.97, category: 'outdoor', image: '🪴', description: 'All-purpose potting mix, 1 cu ft. Enriched with fertilizer. For containers and raised beds.' },
+  { id: '16', name: 'Random Orbit Sander 5"', price: 59.97, category: 'tools', image: '🔧', description: '5 in. corded random orbit sander with 3.0 amp motor. Variable speed, dust-sealed switch. Includes sanding discs and dust bag.' },
 ]
