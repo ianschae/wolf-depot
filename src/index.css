@@ -414,6 +414,7 @@ img {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  transition: color 0.2s ease;
 }
 
 .product-card-title:hover {
@@ -493,6 +494,7 @@ img {
 
 .breadcrumb a {
   color: var(--gray-700);
+  transition: color 0.2s ease;
 }
 
 .breadcrumb span {
