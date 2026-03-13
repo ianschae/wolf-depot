@@ -291,10 +291,11 @@ img {
 .hero {
   background: linear-gradient(135deg, var(--hd-orange) 0%, var(--hd-orange-dark) 100%);
   color: var(--white);
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 52px 40px;
   margin-bottom: 32px;
   text-align: center;
+  box-shadow: var(--shadow-md);
 }
 
 .hero h1 {
@@ -332,6 +333,8 @@ img {
   font-size: 22px;
   font-weight: 700;
   margin: 0 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 3px solid var(--hd-orange);
   color: var(--black);
   letter-spacing: -0.02em;
 }
